@@ -1,14 +1,18 @@
 package tn.esprit.autolocapi.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.ManyToOne;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,13 +33,21 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idPaiement;
 
+    @NotNull(message = "Le montant est obligatoire")
+    @Positive(message = "Le montant doit être supérieur à 0")
+    @Column(nullable = false)
     BigDecimal montant;
+
+    @NotNull(message = "La date de paiement est obligatoire")
+    @Column(nullable = false)
     LocalDate datePaiement;
 
+    @NotNull(message = "Le mode de paiement est obligatoire")
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     ModePaiement modePaiement;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_contrat")
+    @JoinColumn(name = "id_contrat", nullable = false)
     Contrat contrat;
 }
