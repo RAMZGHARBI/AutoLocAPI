@@ -1,5 +1,8 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -68,10 +71,12 @@ public class Vehicule {
     @Column(nullable = false)
     StatutVehicule statut;
 
+    @JsonIgnoreProperties(value = {"vehicules", "employes", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_agence", nullable = false)
     Agence agence;
 
+    @JsonIgnoreProperties(value = "vehicules", allowSetters = true)
     @ManyToMany
     @JoinTable(
             name = "vehicule_equipement",
@@ -80,9 +85,11 @@ public class Vehicule {
     )
     List<Equipement> equipements;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "vehicule")
     List<Maintenance> maintenances;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "vehicule")
     List<Reservation> reservations;
 }
