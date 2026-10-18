@@ -1,5 +1,7 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,6 +51,7 @@ public class Contrat {
     @JoinColumn(name = "id_reservation", nullable = false, unique = true)
     Reservation reservation;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "contrat",
             cascade = CascadeType.ALL,

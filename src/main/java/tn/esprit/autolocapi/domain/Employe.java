@@ -1,5 +1,7 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,8 +46,9 @@ public class Employe {
     @NotNull(message = "Le rôle est obligatoire")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    Role role;
+    RoleEmploye role;
 
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, allowSetters = true)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_agence", nullable = false)
     Agence agence;

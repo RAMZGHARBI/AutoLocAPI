@@ -1,5 +1,8 @@
 package tn.esprit.autolocapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -63,6 +66,7 @@ public class Client {
     @Column(nullable = false)
     LocalDate dateInscription;
 
-    @OneToMany(mappedBy = "client")
+    @JsonIgnore
+    @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
     List<Reservation> reservations;
 }
